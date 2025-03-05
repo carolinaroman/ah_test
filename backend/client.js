@@ -14,18 +14,27 @@ const __dirname = path.dirname(__filename);
  * This function reads the file content and converts it to a readable stream,
  * return it as a promise
  *
- * @param {string} fileName
- * @param {string} filePath
+ * @param {string} fileName - name of csv file
+ * @param {string} filePath - path of csv file relative to the root of the repo
  *
- * @return {Promise<unknown>}
+ * @return {Promise<Object[]>} array of objects, each object containing a row of the csv
  */
-export async function loadCSV(fileName, filePath) {
+export const loadCSV = async (fileName, filePath) => {
   const csvPath = path.join(__dirname, filePath, fileName);
 
   const results = [];
 
   // Read CSV content
-  const fileContent = await fs.readFile(csvPath);
+  let fileContent;
+  try {
+    fileContent = await fs.readFile(csvPath);
+  } catch (err) {
+    console.log("WOAH", err);
+
+    // Return empty array in failure
+    return [];
+  }
+
   // Convert file content to readable stream
   const readableStream = Readable.from(fileContent);
 
@@ -40,4 +49,4 @@ export async function loadCSV(fileName, filePath) {
       // Handle any error
       .on("error", (err) => reject(err));
   });
-}
+};
