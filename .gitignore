@@ -5,6 +5,5 @@ node_modules/
 /node_modules/
 
 # React Router
-/.react-router/
-/build/
-
+.react-router/
+build/
