@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+/*
+ * Style for all submit buttons
+ */
+@layer components {
+  .btn-submit {
+    @apply bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors;
+  }
+
+  .title {
+    @apply text-2xl font-bold;
+  }
+}
+
