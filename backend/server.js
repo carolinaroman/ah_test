@@ -1,16 +1,29 @@
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
 import routes from "./routes.js";
 import { sendApiResponse } from "./utils.js";
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({ path: join(__dirname, "../.env") });
 
 const app = express();
 
 /**
  * Middleware
  */
+app.use(
+  cors({
+    origin: process.env.VITE_VERCEL_URL || "http://localhost:5173", // Vite's default port
+    credentials: true,
+  }),
+);
+
 // Parse JSON requests
 app.use(express.json());
 
