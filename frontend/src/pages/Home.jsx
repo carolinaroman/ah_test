@@ -13,7 +13,11 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate("/form");
+    localStorage.removeItem("formData");
+
+    // Use location.state to define a variable to indicate
+    // we need to reset Formik values and localStorage
+    navigate("/form", { state: { startFresh: true } });
   };
 
   return (
