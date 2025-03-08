@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter, NavLink, RouterProvider } from "react-router-dom";
 
 import Home from "@/pages/Home.jsx";
+import Matches from "@/pages/Matches.jsx";
 import WizardForm from "@/pages/WizardForm";
 
 /**
@@ -36,7 +37,7 @@ const Layout = ({ children }) => (
           }`
         }
       >
-        Wizard
+        Onboarding
       </NavLink>
     </nav>
 
@@ -63,6 +64,16 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
+  // Matches results
+  {
+    path: "/matches",
+    element: (
+      <Layout>
+        <Matches />
+      </Layout>
+    ),
+  },
+
 ]);
 
 function App() {
