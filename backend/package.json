@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "-": "^0.0.1",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.3"
+  },
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:watch": "../node_modules/.bin/jest --watchAll",
+    "start": "node server.js",
+    "dev": "../node_modules/.bin/nodemon backend/server.js"
+  },
+  "type": "module"
+}

@@ -1,20 +1,12 @@
 {
-  "dependencies": {
-    "-": "^0.0.1",
-    "csv-parser": "^3.2.0",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2"
-  },
-  "devDependencies": {
-    "jest": "^29.7.0",
-    "nodemon": "^3.1.9",
-    "prettier": "^3.5.3"
-  },
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:watch": "jest --watchAll",
-    "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js"
-  },
-  "type": "module"
+    "vercel-build": "npm run build:backend && npm run build:frontend",
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "build:backend": "cd backend && npm install"
+  }
 }
