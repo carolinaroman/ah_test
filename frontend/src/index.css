@@ -4,12 +4,18 @@
  * Style for all submit buttons
  */
 @layer components {
+  /* For form submit button */
   .btn-submit {
-    @apply bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors;
+    @apply bg-blue-500 hover:bg-blue-600 text-white font-semibold my-8 py-2 px-6 rounded-lg transition-colors;
   }
 
+  /* Title in each page */
   .title {
     @apply text-2xl font-bold;
   }
-}
 
+  /* Error messages in forms */
+  .formErrorMessage {
+    @apply text-red-500 text-sm;
+  }
+}
