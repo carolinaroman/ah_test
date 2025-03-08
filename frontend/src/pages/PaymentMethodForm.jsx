@@ -24,7 +24,7 @@ const PaymentMethodForm = () => {
   ];
 
   return (
-    <Form className="p-6" onSubmit={() => {}}>
+    <Form className="p-6">
       {/* Show current step */}
       <ProgressBar currentStep={5} />
 
