@@ -27,15 +27,15 @@ const TherapistPreferencesForm = () => {
   //       religion: muslim OR jewish
   //       in other words not all options are radios
   const therapistPreferences = {
-    gender: ["female", "male", "no_preference"],
+    gender: ["female", "male", "no preference"],
     ethnicity: [
-      "east_asian",
-      "south_asian",
-      "middle_eastern",
-      "african_american",
-      "hispanic_latino",
-      "white_caucasian",
-      "no_preference",
+      "east asian",
+      "south asian",
+      "middle eastern",
+      "african american",
+      "hispanic latino",
+      "white caucasian",
+      "no preference",
     ],
     religion: [
       "muslim",
@@ -44,7 +44,7 @@ const TherapistPreferencesForm = () => {
       "hindu",
       "buddhist",
       "atheist",
-      "no_preference",
+      "no preference",
     ],
   };
 
@@ -88,7 +88,10 @@ const TherapistPreferencesForm = () => {
                   id={`gender_${option}`}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                 />
-                <label htmlFor={`gender_${option}`} className="text-gray-700">
+                <label
+                  htmlFor={`gender_${option}`}
+                  className="text-gray-700 capitalize"
+                >
                   {option}
                 </label>
               </div>
@@ -111,7 +114,7 @@ const TherapistPreferencesForm = () => {
                 />
                 <label
                   htmlFor={`ethnicity_${option}`}
-                  className="text-gray-700"
+                  className="text-gray-700 capitalize"
                 >
                   {option}
                 </label>
@@ -133,7 +136,10 @@ const TherapistPreferencesForm = () => {
                   id={`religion_${option}`}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                 />
-                <label htmlFor={`religion_${option}`} className="text-gray-700">
+                <label
+                  htmlFor={`religion_${option}`}
+                  className="text-gray-700 capitalize"
+                >
                   {option}
                 </label>
               </div>

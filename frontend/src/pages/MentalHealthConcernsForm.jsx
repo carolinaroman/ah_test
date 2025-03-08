@@ -12,20 +12,20 @@ import ProgressBar from "@/components/ProgressBar.jsx";
  *
  * @returns {JSX.Element} Form with mental health concerns checkboxes
  */
-const MentalHealthConcerns = () => {
+const MentalHealthConcernsForm = () => {
   const navigate = useNavigate();
   const { values, isSubmitting, setValues } = useFormikContext();
 
   // Array of elements to be made into checkboxes
   // so patients can select multiple
   const concerns = [
-    "academic_stress",
+    "academic stress",
     "anxiety",
     "depression",
     "insomnia",
-    "racial_identity_issues",
-    "trauma_related_stress",
-    "work_related_stress",
+    "racial identity issues",
+    "trauma related stress",
+    "work related stress",
   ];
 
   /**
@@ -63,8 +63,11 @@ const MentalHealthConcerns = () => {
             id={concern}
             className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
-          <label htmlFor={concern} className="text-gray-700 font-medium">
-            {concern.charAt(0).toUpperCase() + concern.slice(1)}
+          <label
+            htmlFor={concern}
+            className="text-gray-700 font-medium capitalize"
+          >
+            {concern}
           </label>
         </div>
       ))}
@@ -74,4 +77,4 @@ const MentalHealthConcerns = () => {
   );
 };
 
-export default MentalHealthConcerns;
+export default MentalHealthConcernsForm;

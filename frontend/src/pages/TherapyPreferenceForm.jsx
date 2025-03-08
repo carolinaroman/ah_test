@@ -19,10 +19,10 @@ const TherapyPreferenceForm = () => {
   // Array of therapy modalities, allowing patients
   // to select only multiple ones
   const therapyTypes = [
-    "cognitive_behavioral_therapy_cbt",
-    "dialectical_behavior_therapy_dbt",
-    "acceptance_and_commitment_therapy_act",
-    "eye_movement_desensitization_and_reprocessing_emdr",
+    "cognitive behavioral therapy (cbt)",
+    "dialectical behavior therapy (dbt)",
+    "acceptance and commitment therapy (act)",
+    "eye movement desensitization and reprocessing (emdr)",
   ];
 
   /**
@@ -61,7 +61,7 @@ const TherapyPreferenceForm = () => {
             id={therapy}
             className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
-          <label htmlFor={therapy} className="text-gray-700 font-medium">
+          <label htmlFor={therapy} className="text-gray-700 font-medium capitalize">
             {therapy}
           </label>
         </div>
