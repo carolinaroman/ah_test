@@ -9,7 +9,7 @@ const router = Router();
 /**
  * Endpoint to match patients to providers
  */
-router.use("/match", validateApiKey, matches_routes);
+router.use("/matches", validateApiKey, matches_routes);
 
 /**
  * Endpoint to display providers info
