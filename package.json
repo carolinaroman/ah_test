@@ -2,7 +2,8 @@
   "private": true,
   "workspaces": [
     "frontend",
-    "backend"
+    "backend",
+    "shared"
   ],
   "scripts": {
     "vercel-build": "npm run build:backend && npm run build:frontend",
