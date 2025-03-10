@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import matches_routes from "./match/match.js";
+import matches_routes from "./match/matches.js";
 import provider_routes from "./providers/providers.js";
 import { validateApiKey } from "./apiAuth.js";
 
