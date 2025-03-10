@@ -1,9 +1,12 @@
 import Joi from "joi";
 
+// Using values with spaces to minimize converting between the csv,
+// react and backend
 export default Joi.object({
   email: Joi.string().email().required(),
   name: Joi.string().required(),
-  state: Joi.string().length(2).required(), // State abbreviation (2 letters)
+  // State abbreviation (2 letters)
+  state: Joi.string().length(2).required(),
   background: Joi.string().allow(""),
   "academic stress": Joi.boolean().required(),
   anxiety: Joi.boolean().required(),
@@ -20,8 +23,8 @@ export default Joi.object({
   "acceptance and commitment therapy (act)": Joi.boolean().required(),
   "eye movement desensitization and reprocessing (emdr)":
     Joi.boolean().required(),
-  paymentMethod: Joi.string().required(),
-  gender_preference: Joi.string().required(),
-  ethnicity_preference: Joi.string().required(),
-  religion_preference: Joi.string().required(),
+  "payment method": Joi.string().required(),
+  "gender preference": Joi.string().required(),
+  "ethnicity preference": Joi.string().required(),
+  "religion preference": Joi.string().required(),
 });
