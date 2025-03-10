@@ -83,7 +83,7 @@ const TherapistPreferencesForm = () => {
               <div key={option} className="flex items-center space-x-3">
                 <Field
                   type="radio"
-                  name="gender_preference"
+                  name="gender preference"
                   value={option}
                   id={`gender_${option}`}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
@@ -107,7 +107,7 @@ const TherapistPreferencesForm = () => {
               <div key={option} className="flex items-center space-x-3">
                 <Field
                   type="radio"
-                  name="ethnicity_preference"
+                  name="ethnicity preference"
                   value={option}
                   id={`ethnicity_${option}`}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
@@ -131,7 +131,7 @@ const TherapistPreferencesForm = () => {
               <div key={option} className="flex items-center space-x-3">
                 <Field
                   type="radio"
-                  name="religion_preference"
+                  name="religion preference"
                   value={option}
                   id={`religion_${option}`}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"

@@ -39,7 +39,7 @@ const PaymentMethodForm = () => {
           <div key={option.id} className="flex items-center space-x-3">
             <Field
               type="radio"
-              name="paymentMethod"
+              name="payment method"
               id={option.id}
               value={option.id}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
