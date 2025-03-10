@@ -1,16 +1,15 @@
 import { Router } from "express";
 
 import formSchema from "./requestSchema.js";
-import { loadCSV } from "../client.js";
+import providerMatcher from "../database/dbService.js";
 import { sendApiResponse } from "../utils.js";
 
 const router = Router();
 
-export const postMatchHandler = async (req, res) => {
+export const postMatchesHandler = async (req, res) => {
   /**
    * 1. Validate request
    */
-
   const { error, value } = formSchema.validate(req.body);
   if (error) {
     console.error("Validation error:", error.details);
@@ -18,12 +17,14 @@ export const postMatchHandler = async (req, res) => {
     return sendApiResponse(res, 400, error.details);
   }
 
-  console.log(value);
-  // const allProviders = await loadCSV("providers.csv", "providers");
+  /**
+   * 2. Use request to filter providers
+   */
+  const matches = await providerMatcher.getMatches(value);
 
-  return sendApiResponse(res, 200, "success");
+  return sendApiResponse(res, 200, matches);
 };
 
-router.post("", postMatchHandler);
+router.post("", postMatchesHandler);
 
 export default router;
