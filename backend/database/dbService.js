@@ -193,11 +193,6 @@ export class ProviderMatcher {
      */
     const allFilters = [
       // {
-      //   dfColumnName: "areas of specialization",
-      //   reqAttrName: concernsMapping, // Direct array from constants.js
-      //   weights: this.weights.essential,
-      // },
-      // {
       //   dfColumnName: "areas of concern",
       //   reqAttrName: Object.values(concernsMapping).flat(), // Flatten all concerns arrays
       //   weights: this.weights.essential,
