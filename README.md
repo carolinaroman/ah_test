@@ -35,6 +35,7 @@ This monorepo contains a Vite React web, with a Node.js Express.js backend.
 #### Frontend
 - [Ky](https://github.com/sindresorhus/ky) is a lightweight no dependencies HTTP client based on the fetch API, that reduces the boilerplate code to make simple API requests.  
 - [Tailwind CSS](https://tailwindcss.com/) a CSS framework for fast design and styling.
+- [Formik](https://formik.org/) a form library for React that handles validation, state management.
 
 #### Backend
 - [Danfo.js](https://danfo.jsdata.org/) is a library to manipulate and process structured data. Danfo allows me to work with data in columns directly from the csv file, instead of a database backend (also, I normally work with an ORM, not in SQL directly)
