@@ -52,7 +52,7 @@ The filter system contains different levels of importance for the parameters pro
     ```
    This allows me to match strings like `Attention Deficit Hyperactivity Disorder (ADD/ADHD)` to find a provider in the mock data. I used the array to display tooltips to the patient, in case they need a bit of extra help to find their exact concern in the page.
 
-3. **Significant Filters:** an important part of the therapeutic relationship is the trust created between the provider and the patient. Having a provider who understands our background can be a big help. Given the mock data, 4 essential filters were identified. _All filters are optional and have the same importance_, allowing for the patient to select "No preference" in which case the filter is skipped.
+3. **Significant Filters:** an important part of the therapeutic relationship is the trust created between the provider and the patient. Having a provider who understands our background can be a big help. Given the mock data, 4 essential filters were identified. _These filters are optional and have the same importance_, allowing for the patient to select "No preference" in which case the filter is skipped.
    - Ethnic Identity
    - Gender Identity
    - Language
