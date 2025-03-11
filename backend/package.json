@@ -21,7 +21,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:watch": "../node_modules/.bin/jest --watchAll",
     "start": "node server.js",
-    "dev": "../node_modules/.bin/nodemon backend/server.js"
+    "backend": "../node_modules/.bin/nodemon backend/server.js"
   },
   "type": "module"
 }
