@@ -58,7 +58,7 @@ export const concernsMapping = {
 /**
  * Therapist preferences
  */
-export const gender = ["female", "male", "no preference"]
+export const gender = ["female", "male", "No preference"]
 
 export const ethnicIdentities = [
   "African American",
@@ -73,7 +73,8 @@ export const ethnicIdentities = [
   "Southeast Asian",
   "Taiwanese American",
   "Vietnamese",
-  "White/Caucasian"
+  "White/Caucasian",
+  "No preference"
 ];
 
 export const languages = [
@@ -85,7 +86,8 @@ export const languages = [
   "Mandarin",
   "Spanish",
   "Tagalog",
-  "Vietnamese"
+  "Vietnamese",
+  "No preference"
 ];
 
 export const religion = [
@@ -95,7 +97,8 @@ export const religion = [
   "Hindu",
   "Muslim",
   // "Prefer not to say",
-  "Non-religious"  // Placed at the end
+  "Non-religious",  // Placed at the end,
+  "No preference"
 ];
 
 export const therapyTypes = {
@@ -128,7 +131,7 @@ export const therapyTypes = {
   "Trauma & EMDR": [
     "EMDR",
     "Prolonged Exposure Therapy"
-  ]
+  ],
 };
 
 export const insurances = [
@@ -148,5 +151,3 @@ export const insurances = [
   "UnitedHealthcare",
   "Self Pay",
 ];
-
-
