@@ -38,6 +38,7 @@ This monorepo contains a Vite React web, with a Node.js Express.js backend.
 
 #### Backend
 - [Danfo.js](https://danfo.jsdata.org/) is a library to manipulate and process structured data. Danfo allows me to work with data in columns directly from the csv file, instead of a database backend (also, I normally work with an ORM, not in SQL directly)
+- [Joi](https://joi.dev/) this is a schema validator for Javascript that allows not only to define what attributes are required in the request to the API, but I can also specify the type of data (for example, email).
 
 ### Notes
 - I added the following columns to the mock data in the CSV
