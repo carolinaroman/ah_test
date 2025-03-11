@@ -21,6 +21,12 @@ export default Joi.object({
     return acc;
   }, {}),
 
+  // Using object keys from therapyTypes
+  ...Object.keys(therapyTypes).reduce((acc, key) => {
+    acc[key] = Joi.boolean().required();
+    return acc;
+  }, {}),
+
   // Using flat arrays directly
   gender: Joi.string()
     .valid(...gender)
@@ -35,15 +41,7 @@ export default Joi.object({
     .valid(...religion)
     .required(),
 
-  // Using object keys from therapyTypes
-  ...Object.keys(therapyTypes).reduce((acc, key) => {
-    acc[key] = Joi.boolean().required();
-    return acc;
-  }, {}),
-
   "payment method": Joi.string()
     .valid(...insurances)
     .required(),
-
-  // Preferences using the same arrays as their sources
 });
