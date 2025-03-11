@@ -2,39 +2,43 @@ import Joi from "joi";
 
 import {
   concernsMapping,
+  ethnicity,
   gender,
-  ethnicIdentities,
+  insurances,
   languages,
   religion,
   therapyTypes,
-  insurances,
 } from "shared";
+
+/**
+ * Creates validation rules object where each key maps to a required boolean
+ * @param {Object} sourceObject - The object whose keys will be used to create validation rules
+ * @returns {Object} Object with Joi boolean validation rules for each key
+ */
+const createBooleanRules = (sourceObject) => {
+  const rules = {};
+  for (const key of Object.keys(sourceObject)) {
+    rules[key] = Joi.boolean().required();
+  }
+  return rules;
+};
 
 export default Joi.object({
   email: Joi.string().email().required(),
   name: Joi.string().required(),
   state: Joi.string().length(2).required(),
 
-  // Using object keys from concernsMapping
-  ...Object.keys(concernsMapping).reduce((acc, key) => {
-    acc[key] = Joi.boolean().required();
-    return acc;
-  }, {}),
+  ...createBooleanRules(concernsMapping),
+  ...createBooleanRules(therapyTypes),
 
-  // Using object keys from therapyTypes
-  ...Object.keys(therapyTypes).reduce((acc, key) => {
-    acc[key] = Joi.boolean().required();
-    return acc;
-  }, {}),
-
-  // Using flat arrays directly
+  // Using flat arrays directly to enforce values
+  ethnicity: Joi.string()
+    .valid(...ethnicity)
+    .allow(""),
   gender: Joi.string()
     .lowercase() // First convert to lowercase
-    .valid("male", "female", "no preference") // Then validate against allowed values
+    .valid(...gender) // Then validate against allowed values
     .required(),
-  ethnicity: Joi.string()
-    .valid(...ethnicIdentities)
-    .allow(""),
   language: Joi.string()
     .valid(...languages)
     .allow(""),
