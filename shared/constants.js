@@ -1,158 +1,153 @@
-export const specializations = [
-  "depression",
-  "anxiety",
-  "academic stress",
-  "insomnia",
-  "racial identity issues",
-  "trauma related stress",
-  "work related stress",
-];
-
 /**
  * The keys are the simplified categories for display to patients
  * The array are the corresponding strings found in the csv
  */
-const concernsMapping = {
-  "Depression & Mood Disorders": [
-    "Depression",
-    "Low self-esteem",
-    "Mood disorder"
+export const concernsMapping = {
+  "ADHD & Autism": [
+    "ADHD",
+    "Attention Deficit Hyperactivity Disorder (ADD/ADHD)",
+    "Autism",
   ],
   "Anxiety, Panic & Worry": [
     "Anxiety",
     "Panic attacks",
+    "Social fears",
     "Worry",
-    "Social fears"
   ],
-  "Trauma & PTSD": [
-    "Post-Traumatic Stress Disorder (PTSD)",
-    "Trauma-related stress",
-    "Race-based trauma",
-    "Trauma therapy"
+  "Behavioral Health": [
+    "Anger management",
+    "Eating Disorders",
+    "Sleep problems",
+    "Substance use disorder",
   ],
   "Cultural & Identity": [
+    "Culturally-responsive treatments",
     "Ethnicity and racial identity related issues and/or trauma",
     "LGBTQ+ related concerns",
-    "Culturally-responsive treatments"
   ],
-  "Work & Life Challenges": [
-    "Major life transitions",
-    "Academic stress",
-    "Occupation-related stress",
-    "Work-related stress"
+  "Depression & Mood Disorders": [
+    "Depression",
+    "Low self-esteem",
+    "Mood disorder",
+  ],
+  "Grief & Loss": ["Grief/bereavement"],
+  "Mental Health Conditions": [
+    "Impulse-control difficulties",
+    "OCD",
+    "Personality disorders",
   ],
   "Relationships & Social": [
     "Interpersonal problems",
     "Relationship difficulties",
-    "Sexual concerns"
+    "Sexual concerns",
   ],
-  "ADHD & Autism": [
-    "Attention Deficit Hyperactivity Disorder (ADD/ADHD)",
-    "ADHD",
-    "Autism"
+  "Trauma & PTSD": [
+    "Post-Traumatic Stress Disorder (PTSD)",
+    "Race-based trauma",
+    "Trauma therapy",
+    "Trauma-related stress",
   ],
-  "Mental Health Conditions": [
-    "OCD",
-    "Personality disorders",
-    "Impulse-control difficulties"
+  "Work & Life Challenges": [
+    "Academic stress",
+    "Major life transitions",
+    "Occupation-related stress",
+    "Work-related stress",
   ],
-  "Behavioral Health": [
-    "Anger management",
-    "Substance use disorder",
-    "Eating Disorders",
-    "Sleep problems"
-  ],
-  "Grief & Loss": [
-    "Grief/bereavement"
-  ]
 };
 
-const therapyTypesMapping = {
-  "Cognitive Behavioral Approaches": [
-    "CBT",
-    "Cognitive Behavioral Therapy (CBT)",
-    "Trauma Focused CBT",
-    "Mindfulness-Based (MBCT)",
-    "Acceptance and Commitment Therapy (ACT)"
-  ],
-  "Trauma & EMDR": [
-    "EMDR",
-    "Prolonged Exposure Therapy"
-  ],
-  "Relationship & Family": [
-    "Family Systems Therapy",
-    "Emotionally Focused Therapy",
-    "Relational-Cultural Therapy",
-    "Contextual Therapy",
-    "Restoration Therapy"
-  ],
-  "Psychodynamic & Person-Centered": [
-    "Psychodynamic therapy",
-    "Psychodynamic",
-    "Person Centered Therapy"
-  ],
+/**
+ * Therapist preferences
+ */
+export const gender = ["female", "male", "no preference"]
+
+export const ethnicIdentities = [
+  "African American",
+  "Asian American, Taiwanese",
+  "Chinese American",
+  "Chinese Canadian",
+  "Chinese Taiwanese American",
+  "Indian",
+  "Korean American",
+  "Mixed - half indian half white",
+  "South Asian- Mixed , Sri Lankan",
+  "Southeast Asian",
+  "Taiwanese American",
+  "Vietnamese",
+  "White/Caucasian"
+];
+
+export const languages = [
+  "Cantonese",
+  "English",
+  "French",
+  "Hindi",
+  "Korean",
+  "Mandarin",
+  "Spanish",
+  "Tagalog",
+  "Vietnamese"
+];
+
+export const religion = [
+  "Buddhist",
+  "Catholic",
+  "Christian",
+  "Hindu",
+  "Muslim",
+  // "Prefer not to say",
+  "Non-religious"  // Placed at the end
+];
+
+
+export const therapyTypes = {
   "Behavioral & Motivational": [
     "Dialectical Behavioral Therapy (DBT)",
-    "Motivational Interviewing",
-    "MI"
+    "MI",
+    "Motivational Interviewing"
+  ],
+  "Cognitive Behavioral Approaches": [
+    "Acceptance and Commitment Therapy (ACT)",
+    "Cognitive Behavioral Therapy (CBT)",
+    "Mindfulness-Based (MBCT)",
+    "Trauma Focused CBT"
   ],
   "Creative & Narrative": [
     "Art Therapy",
     "Narrative Therapy"
   ],
-  "Other Approaches": [
-    "Therapist's Recommendation"
+  "Psychodynamic & Person-Centered": [
+    "Person Centered Therapy",
+    "Psychodynamic therapy"
+  ],
+  "Relationship & Family": [
+    "Contextual Therapy",
+    "Emotionally Focused Therapy",
+    "Family Systems Therapy",
+    "Relational-Cultural Therapy",
+    "Restoration Therapy"
+  ],
+  "Trauma & EMDR": [
+    "EMDR",
+    "Prolonged Exposure Therapy"
   ]
 };
 
-// Utility functions for therapy types
-const getTherapyDisplayCategory = (originalType) => {
-  for (const [displayCategory, originalTypes] of Object.entries(therapyTypesMapping)) {
-    if (originalTypes.includes(originalType)) {
-      return displayCategory;
-    }
-  }
-  return null;
-};
-
-
-const insurances = [
+export const insurances = [
   "Aetna",
-  "Blue Cross Blue Shield",
-  "Cigna",
-  "Kaiser Permanente",
-  "UnitedHealthcare",
   "Anthem",
-  "Humana",
-  "Oxford Health Plans",
-  "Empire BlueCross",
-  "Medicare",
-  "HealthNet",
-  "Optum",
-  "Molina Healthcare",
+  "Blue Cross Blue Shield",
   "Centene",
-  "Self Pay"
-]
-
-const languages = [
-  "English",
-  "Hindi",
-  "French",
-  "Spanish",
-  "Korean",
-  "Mandarin",
-  "Tagalog",
-  "Cantonese",
-  "Vietnamese",
+  "Cigna",
+  "Empire BlueCross",
+  "HealthNet",
+  "Humana",
+  "Kaiser Permanente",
+  "Medicare",
+  "Molina Healthcare",
+  "Optum",
+  "Oxford Health Plans",
+  "UnitedHealthcare",
+  "Self Pay",
 ];
 
-const religion = [
-  "None",
-  "Buddhist",
-  "Hindu",
-  "Catholic",
-  "Prefer not to say", // Joe Tanaka
-  "Christian",
-  "Muslim"
-]
 
