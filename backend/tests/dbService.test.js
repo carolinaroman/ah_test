@@ -57,8 +57,6 @@ describe("ProviderMatcher", () => {
 
     const result = await matcher.getMatches(filters);
 
-    console.log(result);
-
     expect(result.length).toBe(3);
     expect(result.map((provider) => provider["first name"])).toEqual(
       expect.arrayContaining(["Nisha", "Joe", "Sabreen"]),
