@@ -96,23 +96,29 @@ export class ProviderMatcher {
    * @return {DataFrame}
    */
   _applyCriticalFilters = (filters, df) => {
+    let tmpDf = df.copy();
+
     /**
      * 1. Filter providers by state.
      */
-    console.log(df.columns);
     if (filters.state) {
-      df = df.query(df["state licensed"].str.includes(filters.state));
+      tmpDf = tmpDf.loc({
+        rows: tmpDf["state licensed"].str.includes(filters.state),
+      });
     }
+
     /**
      * 2. Filter providers by payment method.
      */
     if (filters["payment method"] && filters["payment method"] !== "Self Pay") {
-      df = df.query(
-        df["insurance accepted"].str.includes(filters["payment method"]),
-      );
+      tmpDf = tmpDf.loc({
+        rows: tmpDf["insurance accepted"].str.includes(
+          filters["payment method"],
+        ),
+      });
     }
 
-    return df;
+    return tmpDf;
   };
 
   /**
@@ -130,14 +136,21 @@ export class ProviderMatcher {
   _applyFilters = (columnName, filters, df, filtersToCheck, weight) => {
     for (const filter of filtersToCheck) {
       if (filters[filter]) {
-        df[columnName].str.includes(filters[filter]);
+        // Create filtered DataFrame using loc
+        const filteredDf = df.loc({
+          rows: df[columnName].str.includes(filters[filter]),
+        });
 
         // This means if a match was found
-        if (df.shape[0] !== 0) {
-          df.addColumn(
+        if (filteredDf.shape[0] !== 0) {
+          // Update value for matchScore
+          filteredDf.addColumn(
             "matchScore",
-            df["matchScore"].values.map((score) => score + weight),
+            filteredDf["matchScore"].values.map((score) => score + weight),
           );
+
+          // Update the DataFrame with the filtered results
+          df = filteredDf;
         } else {
           console.log("no result");
         }
