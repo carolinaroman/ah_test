@@ -52,9 +52,9 @@ const MentalHealthConcernsForm = () => {
               type="checkbox"
               name={`concerns.${concern}`}  // Namespace the field
               id={concern}
-              checked={values.concerns?.[concern] || false}  // Control the checked state
+              checked={values[concern] || false}  // Access value directly
               onChange={async (e) => {
-                await setFieldValue(`concerns.${concern}`, e.target.checked);
+                await setFieldValue(concern, e.target.checked);  // Set value directly
               }}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             />

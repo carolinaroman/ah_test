@@ -23,29 +23,39 @@ const WizardForm = () => {
     email: "",
     name: "",
     state: "",
-    background: "",
-    "academic stress": false,
-    anxiety: false,
-    depression: false,
-    insomnia: false,
-    "racial identity issues": false,
-    "trauma related stress": false,
-    "work related stress": false,
+    language: "",
+
+    // From concernsMapping
+    "ADHD & Autism": false,
+    "Anxiety, Panic & Worry": false,
+    "Behavioral Health": false,
+    "Cultural & Identity": false,
+    "Depression & Mood Disorders": false,
+    "Grief & Loss": false,
+    "Mental Health Conditions": false,
+    "Relationships & Social": false,
+    "Trauma & PTSD": false,
+    "Work & Life Challenges": false,
+
+    // From flat arrays
     gender: "",
     ethnicity: "",
     religion: "",
-    "cognitive behavioral therapy (cbt)": false,
-    "dialectical behavior therapy (dbt)": false,
-    "acceptance and commitment therapy (act)": false,
-    "eye movement desensitization and reprocessing (emdr)": false,
-    paymentMethod: "",
+
+    // From therapyTypes
+    "Behavioral & Motivational": false,
+    "Cognitive Behavioral Approaches": false,
+    "Creative & Narrative": false,
+    "Psychodynamic & Person-Centered": false,
+    "Relationship & Family": false,
+    "Trauma & EMDR": false,
+
+    "payment method": "",
   };
 
-  const savedFormData =
-    location.state?.startFresh
-      ? initialValues
-      : JSON.parse(localStorage.getItem("formData")) || initialValues;
-
+  const savedFormData = location.state?.startFresh
+    ? initialValues
+    : JSON.parse(localStorage.getItem("formData")) || initialValues;
 
   /**
    * Handle submission of form values to backend. It also sets
