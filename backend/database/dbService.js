@@ -98,18 +98,14 @@ export class ProviderMatcher {
   _applyCriticalFilters = (filters, df) => {
     let tmpDf = df.copy();
 
-    /**
-     * 1. Filter providers by state.
-     */
+    // 1. Filter providers by state.
     if (filters.state) {
       tmpDf = tmpDf.loc({
         rows: tmpDf["state licensed"].str.includes(filters.state),
       });
     }
 
-    /**
-     * 2. Filter providers by payment method.
-     */
+    // 2. Filter providers by payment method.
     if (filters["payment method"] && filters["payment method"] !== "Self Pay") {
       tmpDf = tmpDf.loc({
         rows: tmpDf["insurance accepted"].str.includes(
@@ -123,94 +119,97 @@ export class ProviderMatcher {
 
   /**
    * @private
-   * Applies scoring based on matched filters from the criteria
+   * Applies scoring based on matched reqAttrName from the criteria
    *
-   * @param columnName
-   * @param filters - json request from client
+   * @param dfColumnName - name of dataframe column to match
+   * @param reqAttrValue - value of attribute in request
    * @param df - providers loaded in a Danfo dataframe
-   * @param {string[]} filtersToCheck - Array of filter keys to check against criteria
    * @param {number} weight - The weight to add to matchScore when filter matches
    *
    * @returns {DataFrame} The modified dataframe with updated matchScores
    */
-  _applyFilters = (columnName, filters, df, filtersToCheck, weight) => {
-    for (const filter of filtersToCheck) {
-      if (filters[filter]) {
-        // Create filtered DataFrame using loc
-        const filteredDf = df.loc({
-          rows: df[columnName].str.includes(filters[filter]),
-        });
+  _applyFilters = (df, dfColumnName, reqAttrValue, weight) => {
+    let filteredDf = df.copy();
 
-        // This means if a match was found
-        if (filteredDf.shape[0] !== 0) {
-          // Update value for matchScore
-          filteredDf.addColumn(
-            "matchScore",
-            filteredDf["matchScore"].values.map((score) => score + weight),
-          );
+    const matchFound = filteredDf[dfColumnName].str.includes(reqAttrValue);
+    filteredDf = df.loc({ rows: matchFound });
 
-          // Update the DataFrame with the filtered results
-          df = filteredDf;
-        } else {
-          console.log("no result");
-        }
-      }
+    // This means if a match was found
+    if (filteredDf.shape[0] !== 0) {
+      // Update value for matchScore
+      filteredDf.addColumn(
+        "matchScore",
+        filteredDf["matchScore"].values.map(
+          (score) => parseInt(score) + parseInt(weight),
+        ),
+      );
+
+      // Update the DataFrame with the filtered results
+    } else {
+      console.log("no result");
     }
 
-    return df;
+    return filteredDf;
   };
 
   /**
    * Our matching function
    *
-   * @param criteria
+   * @param reqFilters
    * @return {Promise<object|void>}
    */
-  async getMatches(criteria) {
+  async getMatches(reqFilters) {
     if (!this.df) {
       await this.initialize();
     }
 
     let filtered = this.df;
 
+    const {
+      state,
+      "payment method": paymentMethod,
+      ...otherFilters
+    } = reqFilters;
+
+    const criticalFilters = { state, "payment method": paymentMethod };
+
     /**
      * CRITICAL MATCH FACTORS
      */
-    filtered = this._applyCriticalFilters(criteria, filtered);
+    filtered = this._applyCriticalFilters(criticalFilters, filtered);
 
-    console.log(filtered);
     /**
      * Now we use our defined weights
      */
     const allFilters = [
       // {
-      //   columnName: "areas of specialization",
-      //   filters: concernsMapping, // Direct array from constants.js
+      //   dfColumnName: "areas of specialization",
+      //   reqAttrName: concernsMapping, // Direct array from constants.js
       //   weights: this.weights.essential,
       // },
       // {
-      //   columnName: "areas of concern",
-      //   filters: Object.values(concernsMapping).flat(), // Flatten all concerns arrays
+      //   dfColumnName: "areas of concern",
+      //   reqAttrName: Object.values(concernsMapping).flat(), // Flatten all concerns arrays
       //   weights: this.weights.essential,
       // },
       {
-        columnName: "Religious Background",
-        filters: religion,
+        dfColumnName: "religious background",
+        reqAttrName: "religion",
+        weights: this.weights.significant,
+      },
+      {
+        dfColumnName: "ethnic identity",
+        reqAttrName: "ethnic identity",
+        weights: this.weights.significant,
+      },
+      {
+        dfColumnName: "gender identity",
+        reqAttrName: "gender",
         weights: this.weights.significant,
       },
       // {
-      //   columnName: "Ethnic Identity",
-      //   filters: criteria["ethnicity preference"],
-      //   weights: this.weights.significant,
-      // },
-      // {
-      //   columnName: "Gender Identity",
-      //   filters: criteria["gender preference"],
-      //   weights: this.weights.significant,
-      // },
-      // {
-      //   columnName: "treatment modality",
-      //   filters: Object.values(therapyTypes).flat(), // Flatten all therapy types arrays
+      //   dfColumnName: "treatment modality",
+      //   reqAttrName: Object.values(therapyTypes).flat(), // Flatten all therapy types arrays
       //   weights: this.weights.flexible,
       // },
     ];
@@ -218,44 +217,26 @@ export class ProviderMatcher {
     let currentFiltered = filtered;
     for (const filter of allFilters) {
       currentFiltered = this._applyFilters(
-        filter.columnName,
-        criteria,
         currentFiltered,
-        filter.filters,
+        filter.dfColumnName,
+        otherFilters[filter.reqAttrName],
         filter.weights,
       );
     }
     filtered = currentFiltered;
 
-    //
-    // significant.forEach((pref) => {
-    //   if (
-    //     criteria[pref.criterion] &&
-    //     criteria[pref.criterion] !== "no preference"
-    //   ) {
-    //     const matches = filtered[pref.field].str.includes(
-    //       criteria[pref.criterion],
-    //     );
-    //     filtered["matchScore"] = filtered["matchScore"].add(
-    //       matches.mul(this.weights.significant),
-    //     );
-    //   }
-    // });
-    //
-    // // TREATMENT MODALITIES SCORING
-
     if (filtered.shape[0] !== 0) {
       // Sort by matches score
       filtered = filtered.sortValues("matchScore", { ascending: false });
 
-      // // Filter by minimum score if specified
-      // const minScore = parseInt(process.env.MATCHER_MIN_SCORE ?? "0");
-      // if (minScore > 0) {
-      //   filtered = filtered.query(filtered["matchScore"].ge(minScore));
-      // }
+      // Filter by minimum score if specified
+      const minScore = parseInt(process.env.MATCHER_MIN_SCORE ?? "0");
+      if (minScore > 0) {
+        filtered = filtered.query(filtered["matchScore"].ge(minScore));
+      }
 
       // Limit results
-      const maxResults = parseInt(process.env.MATCHER_MAX_RESULTS ?? "20");
+      const maxResults = parseInt(process.env.MATCHER_MAX_RESULTS ?? "3");
       filtered = filtered.head(maxResults);
     }
 
