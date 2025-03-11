@@ -98,7 +98,6 @@ export const religion = [
   "Non-religious"  // Placed at the end
 ];
 
-
 export const therapyTypes = {
   "Behavioral & Motivational": [
     "Dialectical Behavioral Therapy (DBT)",
