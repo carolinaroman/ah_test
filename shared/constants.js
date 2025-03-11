@@ -1,4 +1,20 @@
 /**
+ * @fileoverview
+ *
+ * This file contains values extracted from providers.csv (including the
+ * columns of mock data I added), to create a shared list of values for
+ * backend and frontend. These values are used in the frontend components
+ * in the onboarding form, and in backend to validate the frontend
+ * request.
+ *
+ * In the case of Areas of Concern and Therapy Modalities, I gathered
+ * all possible values from the mock data, and created a broader
+ * category. Then the array contains all possible terms in this category
+ * that exists in the mock data. This allows me to show the user only
+ * 10 categories for concerns, instead of 32. Same for therapy types,
+ */
+
+/**
  * The keys are the simplified categories for display to patients
  * The array are the corresponding strings found in the csv
  */
@@ -60,7 +76,7 @@ export const concernsMapping = {
  */
 export const gender = ["female", "male", "No preference"]
 
-export const ethnicIdentities = [
+export const ethnicity = [
   "African American",
   "Asian American, Taiwanese",
   "Chinese American",

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import FormNavigation from "@/components/FormNavigationButtons.jsx";
 import ProgressBar from "@/components/ProgressBar.jsx";
-import {gender, ethnicIdentities, languages, religion} from "shared";
+import {gender, ethnicity, languages, religion} from "shared";
 
 /**
  * Step 3
@@ -104,7 +104,7 @@ const TherapistPreferencesForm = () => {
         <div>
           <h3 className="font-medium mb-2">Preferred Ethnicity:</h3>
           <div className="space-y-2">
-            {ethnicIdentities.map((option) => (
+            {ethnicity.map((option) => (
               <div key={option} className="flex items-center space-x-3">
                 <Field
                   type="radio"
