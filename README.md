@@ -52,10 +52,11 @@ The filter system contains different levels of importance for the parameters pro
     ```
    This allows me to match strings like `Attention Deficit Hyperactivity Disorder (ADD/ADHD)` to find a provider in the mock data. I used the array to display tooltips to the patient, in case they need a bit of extra help to find their exact concern in the page.
 
-3. **Significant Filters:** an important part of the therapeutic relationship is the trust created between the provider and the patient. Having a provider who understands our background can be a big help. Given the mock data, 3 essential filters were identified. _All filters are optional_, allowing for the patient to select "No preference" in which case the filter is skipped.
-   - Religious Background
+3. **Significant Filters:** an important part of the therapeutic relationship is the trust created between the provider and the patient. Having a provider who understands our background can be a big help. Given the mock data, 4 essential filters were identified. _All filters are optional and have the same importance_, allowing for the patient to select "No preference" in which case the filter is skipped.
    - Ethnic Identity
    - Gender Identity
+   - Language
+   - Religious Background
 
 4. **Flexible filters**. In this category I put Therapy Methodologies. If our patient knows what therapeutic approach they would like to get in their therapy, then can choose it. Otherwise, they are not forced to make a selection. This is another case where I found all possible methodologies in the mock data, and created broader categories. The different names are displayed to the patient, so if they are interested in "Family Systems Therapy", they are able to find it inside the category "Relationship & Family".
 
