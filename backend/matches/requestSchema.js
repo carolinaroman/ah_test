@@ -29,7 +29,8 @@ export default Joi.object({
 
   // Using flat arrays directly
   gender: Joi.string()
-    .valid(...gender)
+    .lowercase() // First convert to lowercase
+    .valid("male", "female", "no preference") // Then validate against allowed values
     .required(),
   ethnicity: Joi.string()
     .valid(...ethnicIdentities)
