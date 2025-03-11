@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Formik } from "formik";
-import { Routes, Route, Navigate } from "react-router-dom";
+import {Routes, Route, Navigate, useNavigate} from "react-router-dom";
 
 import AboutTherapyForm from "@/pages/TherapyPreferenceForm.jsx";
 import AreasOfConcern from "@/pages/MentalHealthConcernsForm.jsx";
@@ -16,6 +16,7 @@ import { submitFormData } from "@/apiService/apiService.js";
  * @returns {JSX.Element} Multi-step form with configured routes
  */
 const WizardForm = () => {
+  const navigate = useNavigate();
 
   // All questions in our form
   const initialValues = {
@@ -77,7 +78,7 @@ const WizardForm = () => {
       localStorage.setItem("formResponse", JSON.stringify(data));
 
       // Redirect to results page
-      // navigate("/matches");
+      navigate("/matches");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
