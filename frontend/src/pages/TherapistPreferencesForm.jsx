@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import FormNavigation from "@/components/FormNavigationButtons.jsx";
 import ProgressBar from "@/components/ProgressBar.jsx";
+import {gender, ethnicIdentities, languages, religion} from "shared";
 
 /**
  * Step 3
@@ -21,33 +22,9 @@ const TherapistPreferencesForm = () => {
 
   const { values, isSubmitting, setValues } = useFormikContext();
 
-  // Array of elements to be made into radios
-  // so patients can select only one
   // ToDo: it would be better to allow things like
   //       religion: muslim OR jewish
   //       in other words not all options are radios
-  const therapistPreferences = {
-    gender: ["female", "male", "no preference"],
-    ethnicity: [
-      "east asian",
-      "south asian",
-      "middle eastern",
-      "african american",
-      "hispanic latino",
-      "white caucasian",
-      "no preference",
-    ],
-    religion: [
-      "muslim",
-      "christian",
-      "jewish",
-      "hindu",
-      "buddhist",
-      "atheist",
-      "no preference",
-    ],
-  };
-
   /**
    * Handles form progression, saving current values in
    * Formik context before navigate to Therapy preferences form
@@ -79,7 +56,7 @@ const TherapistPreferencesForm = () => {
         <div>
           <h3 className="font-medium mb-2">Preferred Gender:</h3>
           <div className="space-y-2">
-            {therapistPreferences.gender.map((option) => (
+            {gender.map((option) => (
               <div key={option} className="flex items-center space-x-3">
                 <Field
                   type="radio"
@@ -99,11 +76,35 @@ const TherapistPreferencesForm = () => {
           </div>
         </div>
 
+        {/* Language Preferences */}
+        <div>
+          <h3 className="font-medium mb-2">Preferred Language:</h3>
+          <div className="space-y-2">
+            {languages.map((option) => (
+              <div key={option} className="flex items-center space-x-3">
+                <Field
+                  type="radio"
+                  name="language preference"
+                  value={option}
+                  id={`language_${option}`}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                />
+                <label
+                  htmlFor={`language_${option}`}
+                  className="text-gray-700 capitalize"
+                >
+                  {option}
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Ethnicity Preferences */}
         <div>
           <h3 className="font-medium mb-2">Preferred Ethnicity:</h3>
           <div className="space-y-2">
-            {therapistPreferences.ethnicity.map((option) => (
+            {ethnicIdentities.map((option) => (
               <div key={option} className="flex items-center space-x-3">
                 <Field
                   type="radio"
@@ -127,7 +128,7 @@ const TherapistPreferencesForm = () => {
         <div>
           <h3 className="font-medium mb-2">Preferred Religious Background:</h3>
           <div className="space-y-2">
-            {therapistPreferences.religion.map((option) => (
+            {religion.map((option) => (
               <div key={option} className="flex items-center space-x-3">
                 <Field
                   type="radio"

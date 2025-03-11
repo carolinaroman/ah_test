@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import FormNavigation from "@/components/FormNavigationButtons.jsx";
 import ProgressBar from "@/components/ProgressBar.jsx";
+import { concernsMapping } from "shared";
 
 /**
  * Step 2
@@ -14,19 +15,8 @@ import ProgressBar from "@/components/ProgressBar.jsx";
  */
 const MentalHealthConcernsForm = () => {
   const navigate = useNavigate();
-  const { values, isSubmitting, setValues } = useFormikContext();
-
-  // Array of elements to be made into checkboxes
-  // so patients can select multiple
-  const concerns = [
-    "academic stress",
-    "anxiety",
-    "depression",
-    "insomnia",
-    "racial identity issues",
-    "trauma related stress",
-    "work related stress",
-  ];
+  const { values, isSubmitting, setValues, setFieldValue
+  } = useFormikContext();
 
   /**
    * Handles form progression, saving current values in
@@ -55,20 +45,44 @@ const MentalHealthConcernsForm = () => {
       </h1>
       <p>Please select all that apply to you.</p>
 
-      {concerns.map((concern) => (
-        <div key={concern} className="flex items-center space-x-3">
-          <Field
-            type="checkbox"
-            name={concern}
-            id={concern}
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-          />
-          <label
-            htmlFor={concern}
-            className="text-gray-700 font-medium capitalize"
-          >
-            {concern}
-          </label>
+      {Object.keys(concernsMapping).map((concern) => (
+        <div key={concern} className="relative group">
+          <div className="flex items-center space-x-3">
+            <Field
+              type="checkbox"
+              name={`concerns.${concern}`}  // Namespace the field
+              id={concern}
+              checked={values.concerns?.[concern] || false}  // Control the checked state
+              onChange={async (e) => {
+                await setFieldValue(`concerns.${concern}`, e.target.checked);
+              }}
+              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            />
+            <label
+              htmlFor={concern}
+              className="text-gray-700 font-medium capitalize"
+            >
+              {concern}
+            </label>
+
+            {/* Info icon with tooltip */}
+            <div className="relative group">
+              <div className="w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xs cursor-help">
+                i
+              </div>
+
+              {/* Tooltip positioned to the right of the icon */}
+              <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2 hidden group-hover:block z-10">
+                <div className="bg-gray-800 text-white text-sm px-2 py-1 rounded shadow-lg whitespace-nowrap">
+                  {concernsMapping[concern].join(", ")}
+                  {/* Arrow pointing left */}
+                  <div className="absolute top-1/2 right-full -translate-y-1/2 border-4 border-transparent border-r-gray-800"></div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
         </div>
       ))}
 
