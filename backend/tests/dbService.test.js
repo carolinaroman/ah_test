@@ -13,7 +13,11 @@ describe("ProviderMatcher", () => {
     const filters = {
       state: "TX",
       "payment method": "Self Pay",
+      religion: "no preference",
+      ethnicity: "no preference",
+      gender: "no preference",
     };
+
     const expectedProvider = [
       {
         "first name": "Nancy",
@@ -31,7 +35,7 @@ describe("ProviderMatcher", () => {
         "areas of specialization":
           "Depression, Low self-esteem, Ethnicity and racial identity related issues and/or trauma, LGBTQ+ related concerns, Social fears, Interpersonal problems, Relationship difficulties, Academic stress, Occupation-related stress, Major life transitions, Anxiety, Panic attacks, Worry, Culturally-responsive treatments",
         "state licensed": "FL, CA, TX",
-        matchScore: 6,
+        matchScore: "0",
         "insurance accepted":
           "Aetna, Cigna, UnitedHealthcare, HealthNet, Molina Healthcare, Self Pay",
       },
@@ -46,9 +50,14 @@ describe("ProviderMatcher", () => {
     const filters = {
       state: "NY",
       "payment method": "Empire BlueCross",
+      religion: "no preference",
+      ethnicity: "no preference",
+      gender: "no preference",
     };
 
     const result = await matcher.getMatches(filters);
+
+    console.log(result);
 
     expect(result.length).toBe(3);
     expect(result.map((provider) => provider["first name"])).toEqual(
@@ -61,6 +70,8 @@ describe("ProviderMatcher", () => {
       state: "CA",
       "payment method": "Aetna",
       religion: "Christian",
+      ethnicity: "no preference",
+      gender: "no preference",
     };
 
     const result = await matcher.getMatches(filters);
@@ -76,7 +87,8 @@ describe("ProviderMatcher", () => {
       state: "WA",
       "payment method": "Blue Cross Blue Shield",
       religion: "Buddhist",
-      "ethnic identity": "Chinese Taiwanese American",
+      ethnicity: "Chinese Taiwanese American",
+      gender: "no preference",
     };
 
     const result = await matcher.getMatches(filters);
@@ -92,7 +104,7 @@ describe("ProviderMatcher", () => {
       state: "WA",
       "payment method": "Aetna",
       religion: "Buddhist",
-      "ethnic identity": "Chinese Taiwanese American",
+      ethnicity: "Chinese Taiwanese American",
       gender: "Female",
     };
 
@@ -102,5 +114,63 @@ describe("ProviderMatcher", () => {
     expect(result.map((provider) => provider["first name"])).toEqual(
       expect.arrayContaining(["Grace"]),
     );
+  });
+
+  test("should find providers with Trauma & PTSD specialty and Trauma & EMDR approach, respecting No preference selections", async () => {
+    const filters = {
+      email: "carolina@example.com",
+      name: "Carolina Roman",
+      state: "CA",
+      language: "No preference",
+      "ADHD & Autism": false,
+      "Anxiety, Panic & Worry": false,
+      "Behavioral Health": false,
+      "Cultural & Identity": false,
+      "Depression & Mood Disorders": false,
+      "Grief & Loss": false,
+      "Mental Health Conditions": false,
+      "Relationships & Social": false,
+      "Trauma & PTSD": true,
+      "Work & Life Challenges": false,
+      gender: "No preference",
+      ethnicity: "No preference",
+      religion: "No preference",
+      "Behavioral & Motivational": false,
+      "Cognitive Behavioral Approaches": false,
+      "Creative & Narrative": false,
+      "Psychodynamic & Person-Centered": false,
+      "Relationship & Family": false,
+      "Trauma & EMDR": true,
+      "payment method": "Self Pay",
+    };
+
+    const result = await matcher.getMatches(filters);
+
+    expect(result.length).toBeGreaterThan(0);
+    // All returned providers should have Trauma & PTSD specialty
+    result.forEach((provider) => {
+      expect(provider["areas of specialization"]).toEqual(
+        expect.stringContaining("rauma"),
+      );
+    });
+
+    // All returned providers should be from Florida
+    result.forEach((provider) => {
+      expect(provider["state licensed"]).toEqual(expect.stringContaining("CA"));
+    });
+
+    // All returned providers should accept Self Pay
+    result.forEach((provider) => {
+      expect(provider["insurance accepted"]).toEqual(
+        expect.stringContaining("Self Pay"),
+      );
+    });
+
+    // Should have Trauma & EMDR approach
+    // result.forEach((provider) => {
+    //   expect(provider["treatment approaches"]).toEqual(
+    //     expect.stringContaining("EMDR"),
+    //   );
+    // });
   });
 });

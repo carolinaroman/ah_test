@@ -129,6 +129,16 @@ export class ProviderMatcher {
    * @returns {DataFrame} The modified dataframe with updated matchScores
    */
   _applyFilters = (df, dfColumnName, reqAttrValue, weight) => {
+    try {
+      // ToDo: this is only happening in my tests with incomplete data
+      // Skip filtering if value is "no preference"
+      if (reqAttrValue.toLowerCase() === "no preference") {
+        return df;
+      }
+    } catch (error) {
+      console.log(dfColumnName, error);
+    }
+
     let filteredDf = df.copy();
 
     const matchFound = filteredDf[dfColumnName].str.includes(reqAttrValue);
@@ -199,7 +209,7 @@ export class ProviderMatcher {
       },
       {
         dfColumnName: "ethnic identity",
-        reqAttrName: "ethnic identity",
+        reqAttrName: "ethnicity",
         weights: this.weights.significant,
       },
       {
