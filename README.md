@@ -73,6 +73,7 @@ The filter system contains different levels of importance for the parameters pro
 
 ### Notes
 - I added the following columns to the mock data in the CSV
-  - "State licensed" to filter immediately the providers licensed in the patient state.
-  - "Insurance accepted", also to filter providers for a member who's not Self Pay. For Self-Pay members, no filter is applied. 
+  - "State licensed"
+  - "Insurance accepted"
   - matchscore, a temporary numeric column (its changes are not saved) to calculate a score with Danfo and sort by it.
+- The csv with the mock data needed some sanitation. Its encoding was not UTF-8, and one of the rows had the data in the wrong order. Normally this would be done when saving into the database, so I simply changed the mock data instead of correcting it during runtime.
