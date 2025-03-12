@@ -29,6 +29,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   routes(req, res, next);
 });
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "OK", timestamp: new Date() });
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
