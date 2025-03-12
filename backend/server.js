@@ -26,9 +26,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API routes
-app.use((req, res, next) => {
-  routes(req, res, next);
-});
+app.use(routes);
+
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date() });
 });
