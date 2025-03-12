@@ -16,6 +16,7 @@ describe("ProviderMatcher", () => {
       religion: "no preference",
       ethnicity: "no preference",
       gender: "no preference",
+      language: "no preference",
     };
 
     const expectedProvider = [
