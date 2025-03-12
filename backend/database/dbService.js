@@ -128,11 +128,11 @@ export class ProviderMatcher {
    *
    * @returns {DataFrame} The modified dataframe with updated matchScores
    */
-  _applyFilters = (df, dfColumnName, reqAttrValue, weight) => {
+  _applyStringFilters = (df, dfColumnName, reqAttrValue, weight) => {
     try {
-      // ToDo: this is only happening in my tests with incomplete data
       // Skip filtering if value is "no preference"
       if (reqAttrValue.toLowerCase() === "no preference") {
+        console.log(`Skipping ${dfColumnName}: "no preference"`);
         return df;
       }
     } catch (error) {
@@ -163,40 +163,81 @@ export class ProviderMatcher {
   };
 
   /**
+   * Filters providers based on concerns and therapy types
+   * @param {DataFrame} df - The providers dataframe
+   * @param {string} columnName - Column name to match against
+   * @param {Object} mappingObject - Either concernsMapping or therapyTypes
+   * @param {Object} request - Request object with filters
+   * @returns {DataFrame} Filtered dataframe with matching providers
+   */
+  applyComplexFilter = (df, columnName, mappingObject, request) => {
+    // Extract all keys where value is true
+    const selectedFilters = Object.entries(request)
+      .filter(([key, value]) => value === true)
+      .map(([key]) => key.replace(/^(concerns_|therapy_)/, ""));
+
+    // These are the values actually in the mock data
+    const valuesToMatch = selectedFilters.flatMap(
+      (filter) => mappingObject[filter] || [],
+    );
+
+    // If no filters selected, return the original dataframe
+    if (selectedFilters.length === 0) {
+      return df;
+    }
+
+    // Create the matching mask
+    const matches = df[columnName].apply((values) => {
+      const providerValues = Array.isArray(values)
+        ? values
+        : values.split(",").map((v) => v.trim());
+
+      return valuesToMatch.some((value) => providerValues.includes(value));
+    });
+
+    // Return filtered dataframe
+    return df.loc({ rows: matches });
+  };
+
+  /**
    * Our matching function
    *
-   * @param reqFilters
+   * @param request
    * @return {Promise<object|void>}
    */
-  async getMatches(reqFilters) {
+  async getMatches(request) {
     if (!this.df) {
       await this.initialize();
     }
 
     let filtered = this.df;
 
-    const {
-      state,
-      "payment method": paymentMethod,
-      ...otherFilters
-    } = reqFilters;
-
-    const criticalFilters = { state, "payment method": paymentMethod };
+    const { state, "payment method": paymentMethod, ...otherFilters } = request;
 
     /**
      * CRITICAL MATCH FACTORS
      */
+    const criticalFilters = { state, "payment method": paymentMethod };
     filtered = this._applyCriticalFilters(criticalFilters, filtered);
 
     /**
-     * Now we use our defined weights
+     * Complex filters, these are things like
+     * {
+     *   "ADHD & Autism": true,
+     *   "Anxiety, Panic & Worry": false
+     * }
      */
-    const allFilters = [
-      // {
-      //   dfColumnName: "areas of concern",
-      //   reqAttrName: Object.values(concernsMapping).flat(), // Flatten all concerns arrays
-      //   weights: this.weights.essential,
-      // },
+    filtered = this.applyComplexFilter(
+      filtered,
+      "areas of specialization",
+      concernsMapping,
+      request,
+    );
+
+    /**
+     * These filters are things like {religion: "Christian"}
+     */
+    const stringFilters = [
       {
         dfColumnName: "religious background",
         reqAttrName: "religion",
@@ -212,16 +253,16 @@ export class ProviderMatcher {
         reqAttrName: "gender",
         weights: this.weights.significant,
       },
-      // {
-      //   dfColumnName: "treatment modality",
-      //   reqAttrName: Object.values(therapyTypes).flat(), // Flatten all therapy types arrays
-      //   weights: this.weights.flexible,
-      // },
+      {
+        dfColumnName: "language",
+        reqAttrName: "language",
+        weights: this.weights.significant,
+      },
     ];
 
     let currentFiltered = filtered;
-    for (const filter of allFilters) {
-      currentFiltered = this._applyFilters(
+    for (const filter of stringFilters) {
+      currentFiltered = this._applyStringFilters(
         currentFiltered,
         filter.dfColumnName,
         otherFilters[filter.reqAttrName],
@@ -229,6 +270,13 @@ export class ProviderMatcher {
       );
     }
     filtered = currentFiltered;
+
+    filtered = this.applyComplexFilter(
+      filtered,
+      "treatment modality",
+      therapyTypes,
+      request,
+    );
 
     if (filtered.shape[0] !== 0) {
       // Sort by matches score
