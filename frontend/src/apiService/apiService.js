@@ -30,6 +30,7 @@ import ky from "ky";
 export const submitFormData = async (formData) => {
   const apiUrl = import.meta.env.VITE_VERCEL_URL;
 
+  console.log(apiUrl);
   try {
     return await ky
       .post(`${apiUrl}/matches`, {
