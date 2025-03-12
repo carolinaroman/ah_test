@@ -34,7 +34,7 @@ export const submitFormData = async (formData) => {
   console.log(apiUrl);
   try {
     return await ky
-      .post(`https://${apiUrl}/matches`, {
+      .post(`https://${apiUrl}/api/matches`, {
         headers: {
           "x-api-key": import.meta.env.VITE_ANISE_API_KEY,
         },
