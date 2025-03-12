@@ -49,7 +49,7 @@ const MentalHealthConcernsForm = () => {
           <div className="flex items-center space-x-3">
             <Field
               type="checkbox"
-              name={`concern_${concern}`}
+              name={`concerns_${concern}`}
               id={`concerns_${concern}`}
               checked={values[`concerns_${concern}`] || false}
               onChange={async (e) => {

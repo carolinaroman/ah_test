@@ -50,12 +50,12 @@ const TherapyPreferenceForm = () => {
           <div className="flex items-center space-x-3">
             <Field
               type="checkbox"
-              name={therapy}
-              id={therapy}
+              name={`therapy_${therapy}`}  // Add the therapy_ prefix
+              id={`therapy_${therapy}`}    // Add the therapy_ prefix to keep id consistent
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             />
             <label
-              htmlFor={therapy}
+              htmlFor={`therapy_${therapy}`}  // Update htmlFor to match the new id
               className="text-gray-700 font-medium capitalize"
             >
               {therapy}
