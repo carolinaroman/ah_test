@@ -26,11 +26,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API routes
-app.use(routes);
-
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date() });
 });
+
+app.use("/api", routes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
