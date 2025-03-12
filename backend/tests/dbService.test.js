@@ -121,25 +121,25 @@ describe("ProviderMatcher", () => {
       name: "Carolina Roman",
       state: "CA",
       language: "No preference",
-      "ADHD & Autism": false,
-      "Anxiety, Panic & Worry": false,
-      "Behavioral Health": false,
-      "Cultural & Identity": false,
-      "Depression & Mood Disorders": false,
-      "Grief & Loss": false,
-      "Mental Health Conditions": false,
-      "Relationships & Social": false,
-      "Trauma & PTSD": true,
-      "Work & Life Challenges": false,
+      "concerns_ADHD & Autism": false,
+      "concerns_Anxiety, Panic & Worry": false,
+      "concerns_Behavioral Health": false,
+      "concerns_Cultural & Identity": false,
+      "concerns_Depression & Mood Disorders": false,
+      "concerns_Grief & Loss": false,
+      "concerns_Mental Health Conditions": false,
+      "concerns_Relationships & Social": false,
+      "concerns_Trauma & PTSD": true,
+      "concerns_Work & Life Challenges": false,
       gender: "No preference",
       ethnicity: "No preference",
       religion: "No preference",
-      "Behavioral & Motivational": false,
-      "Cognitive Behavioral Approaches": false,
-      "Creative & Narrative": false,
-      "Psychodynamic & Person-Centered": false,
-      "Relationship & Family": false,
-      "Trauma & EMDR": true,
+      "therapy_Behavioral & Motivational": false,
+      "therapy_Cognitive Behavioral Approaches": false,
+      "therapy_Creative & Narrative": false,
+      "therapy_Psychodynamic & Person-Centered": false,
+      "therapy_Relationship & Family": false,
+      "therapy_Trauma & EMDR": true,
       "payment method": "Self Pay",
     };
 
@@ -164,12 +164,59 @@ describe("ProviderMatcher", () => {
         expect.stringContaining("Self Pay"),
       );
     });
+  });
 
-    // Should have Trauma & EMDR approach
-    // result.forEach((provider) => {
-    //   expect(provider["treatment approaches"]).toEqual(
-    //     expect.stringContaining("EMDR"),
-    //   );
-    // });
+  test("should find providers with Depression & Mood Disorders specialty in Florida with Self Pay", async () => {
+    const filters = {
+      email: "carolina.roman@zoho.com",
+      name: "Carolina Roman",
+      state: "FL",
+      language: "No preference",
+      "concerns_ADHD & Autism": false,
+      "concerns_Anxiety, Panic & Worry": false,
+      "concerns_Behavioral Health": false,
+      "concerns_Cultural & Identity": false,
+      "concerns_Depression & Mood Disorders": true,
+      "concerns_Grief & Loss": false,
+      "concerns_Mental Health Conditions": false,
+      "concerns_Relationships & Social": false,
+      "concerns_Trauma & PTSD": false,
+      "concerns_Work & Life Challenges": false,
+      gender: "no preference",
+      ethnicity: "No preference",
+      religion: "No preference",
+      "therapy_Behavioral & Motivational": false,
+      "therapy_Cognitive Behavioral Approaches": false,
+      "therapy_Creative & Narrative": false,
+      "therapy_Psychodynamic & Person-Centered": false,
+      "therapy_Relationship & Family": false,
+      "therapy_Trauma & EMDR": false,
+      "payment method": "Self Pay",
+    };
+
+    const result = await matcher.getMatches(filters);
+
+    console.log(result);
+
+    expect(result.length).toBeGreaterThan(0);
+
+    // All returned providers should have Depression & Mood Disorders specialty
+    result.forEach((provider) => {
+      expect(provider["areas of specialization"]).toEqual(
+        expect.stringContaining("Depression"),
+      );
+    });
+
+    // All returned providers should be from Florida
+    result.forEach((provider) => {
+      expect(provider["state licensed"]).toEqual(expect.stringContaining("FL"));
+    });
+
+    // All returned providers should accept Self Pay
+    result.forEach((provider) => {
+      expect(provider["insurance accepted"]).toEqual(
+        expect.stringContaining("Self Pay"),
+      );
+    });
   });
 });
