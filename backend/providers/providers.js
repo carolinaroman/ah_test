@@ -11,6 +11,6 @@ export const getProviderById = async (req, res) => {
   return sendApiResponse(res, 200, allProviders);
 };
 
-router.get("", getProviderById);
+router.get("/", getProviderById);
 
 export default router;
