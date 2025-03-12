@@ -28,7 +28,8 @@ import ky from "ky";
  * @throws {Error} If the network request fails or server returns an error
  */
 export const submitFormData = async (formData) => {
-  const apiUrl = import.meta.env.VITE_VERCEL_URL;
+  const apiUrl = import.meta.env.VITE_VERCEL_URL || 'ah-test.vercel.app'
+  ;
 
   console.log(apiUrl);
   try {
