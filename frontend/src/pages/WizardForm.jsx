@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Formik } from "formik";
-import {Routes, Route, Navigate, useNavigate} from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
 import AboutTherapyForm from "@/pages/TherapyPreferenceForm.jsx";
 import AreasOfConcern from "@/pages/MentalHealthConcernsForm.jsx";
@@ -8,6 +8,7 @@ import PaymentMethodForm from "@/pages/PaymentMethodForm.jsx";
 import PersonalInfoForm from "@/pages/PersonalInfoForm.jsx";
 import TherapistPreferencesForm from "@/pages/TherapistPreferencesForm.jsx";
 import { submitFormData } from "@/apiService/apiService.js";
+import { concernsMapping, therapyTypes } from "shared";
 
 /**
  * Formik main form component, handling routing between steps, and
@@ -26,16 +27,12 @@ const WizardForm = () => {
     language: "",
 
     // From concernsMapping
-    "ADHD & Autism": false,
-    "Anxiety, Panic & Worry": false,
-    "Behavioral Health": false,
-    "Cultural & Identity": false,
-    "Depression & Mood Disorders": false,
-    "Grief & Loss": false,
-    "Mental Health Conditions": false,
-    "Relationships & Social": false,
-    "Trauma & PTSD": false,
-    "Work & Life Challenges": false,
+    ...Object.fromEntries(
+      Object.keys(concernsMapping).map((concern) => [
+        `concerns_${concern}`,
+        false,
+      ]),
+    ),
 
     // From flat arrays
     gender: "",
@@ -43,12 +40,9 @@ const WizardForm = () => {
     religion: "",
 
     // From therapyTypes
-    "Behavioral & Motivational": false,
-    "Cognitive Behavioral Approaches": false,
-    "Creative & Narrative": false,
-    "Psychodynamic & Person-Centered": false,
-    "Relationship & Family": false,
-    "Trauma & EMDR": false,
+    ...Object.fromEntries(
+      Object.keys(therapyTypes).map((therapy) => [`therapy_${therapy}`, false]),
+    ),
 
     "payment method": "",
   };

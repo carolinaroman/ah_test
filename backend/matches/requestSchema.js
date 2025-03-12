@@ -13,12 +13,14 @@ import {
 /**
  * Creates validation rules object where each key maps to a required boolean
  * @param {Object} sourceObject - The object whose keys will be used to create validation rules
+ * @param {string} prefix
+ *
  * @returns {Object} Object with Joi boolean validation rules for each key
  */
-const createBooleanRules = (sourceObject) => {
+const createBooleanRules = (sourceObject, prefix) => {
   const rules = {};
   for (const key of Object.keys(sourceObject)) {
-    rules[key] = Joi.boolean().required();
+    rules[`${prefix}${key}`] = Joi.boolean().required();
   }
   return rules;
 };
@@ -28,8 +30,8 @@ export default Joi.object({
   name: Joi.string().required(),
   state: Joi.string().length(2).required(),
 
-  ...createBooleanRules(concernsMapping),
-  ...createBooleanRules(therapyTypes),
+  ...createBooleanRules(concernsMapping, "concerns_"),
+  ...createBooleanRules(therapyTypes, "therapy_"),
 
   // Using flat arrays directly to enforce values
   ethnicity: Joi.string()

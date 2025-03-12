@@ -74,7 +74,7 @@ export const concernsMapping = {
 /**
  * Therapist preferences
  */
-export const gender = ["female", "male", "No preference"]
+export const gender = ["female", "male", "no preference"];
 
 export const ethnicity = [
   "African American",
@@ -90,7 +90,7 @@ export const ethnicity = [
   "Taiwanese American",
   "Vietnamese",
   "White/Caucasian",
-  "No preference"
+  "No preference",
 ];
 
 export const languages = [
@@ -103,7 +103,7 @@ export const languages = [
   "Spanish",
   "Tagalog",
   "Vietnamese",
-  "No preference"
+  "No preference",
 ];
 
 export const religion = [
@@ -113,41 +113,35 @@ export const religion = [
   "Hindu",
   "Muslim",
   // "Prefer not to say",
-  "Non-religious",  // Placed at the end,
-  "No preference"
+  "Non-religious", // Placed at the end,
+  "No preference",
 ];
 
 export const therapyTypes = {
   "Behavioral & Motivational": [
     "Dialectical Behavioral Therapy (DBT)",
     "MI",
-    "Motivational Interviewing"
+    "Motivational Interviewing",
   ],
   "Cognitive Behavioral Approaches": [
     "Acceptance and Commitment Therapy (ACT)",
     "Cognitive Behavioral Therapy (CBT)",
     "Mindfulness-Based (MBCT)",
-    "Trauma Focused CBT"
+    "Trauma Focused CBT",
   ],
-  "Creative & Narrative": [
-    "Art Therapy",
-    "Narrative Therapy"
-  ],
+  "Creative & Narrative": ["Art Therapy", "Narrative Therapy"],
   "Psychodynamic & Person-Centered": [
     "Person Centered Therapy",
-    "Psychodynamic therapy"
+    "Psychodynamic therapy",
   ],
   "Relationship & Family": [
     "Contextual Therapy",
     "Emotionally Focused Therapy",
     "Family Systems Therapy",
     "Relational-Cultural Therapy",
-    "Restoration Therapy"
+    "Restoration Therapy",
   ],
-  "Trauma & EMDR": [
-    "EMDR",
-    "Prolonged Exposure Therapy"
-  ],
+  "Trauma & EMDR": ["EMDR", "Prolonged Exposure Therapy"],
 };
 
 export const insurances = [

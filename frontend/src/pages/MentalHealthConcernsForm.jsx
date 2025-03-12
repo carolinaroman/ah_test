@@ -15,8 +15,7 @@ import { concernsMapping } from "shared";
  */
 const MentalHealthConcernsForm = () => {
   const navigate = useNavigate();
-  const { values, isSubmitting, setValues, setFieldValue
-  } = useFormikContext();
+  const { values, isSubmitting, setValues, setFieldValue } = useFormikContext();
 
   /**
    * Handles form progression, saving current values in
@@ -50,16 +49,16 @@ const MentalHealthConcernsForm = () => {
           <div className="flex items-center space-x-3">
             <Field
               type="checkbox"
-              name={`concerns.${concern}`}  // Namespace the field
-              id={concern}
-              checked={values[concern] || false}  // Access value directly
+              name={`concern_${concern}`}
+              id={`concerns_${concern}`}
+              checked={values[`concerns_${concern}`] || false}
               onChange={async (e) => {
-                await setFieldValue(concern, e.target.checked);  // Set value directly
+                await setFieldValue(`concerns_${concern}`, e.target.checked);
               }}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             />
             <label
-              htmlFor={concern}
+              htmlFor={`concerns_${concern}`}
               className="text-gray-700 font-medium capitalize"
             >
               {concern}
@@ -79,9 +78,7 @@ const MentalHealthConcernsForm = () => {
                   <div className="absolute top-1/2 right-full -translate-y-1/2 border-4 border-transparent border-r-gray-800"></div>
                 </div>
               </div>
-
             </div>
-
           </div>
         </div>
       ))}
