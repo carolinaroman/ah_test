@@ -51,4 +51,4 @@ export default Joi.object({
   "payment method": Joi.string()
     .valid(...insurances)
     .required(),
-});
+}).unknown(true); // Just for tests and changes, removed in prod
